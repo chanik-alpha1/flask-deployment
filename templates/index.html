@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yield Prediction Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff; /* Light blue background color */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .container form {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .container form label,
+        .container form select {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .container form button {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Model for Yield Prediction</h1>
+        <form>
+            <label for="crop">Select Crop:</label>
+            <select id="crop" name="crop">
+                <option value="wheat">Wheat</option>
+                <option value="rice">Rice</option>
+                <option value="corn">Corn</option>
+                <!-- Add more crop options as needed -->
+            </select>
+            <br>
+
+            <label for="location">Select Location:</label>
+            <select id="location" name="location">
+                <option value="north">North</option>
+                <option value="south">South</option>
+                <option value="east">East</option>
+                <option value="west">West</option>
+                <!-- Add more location options as needed -->
+            </select>
+            <br>
+
+            <label for="fertilizer">Select Fertilizer:</label>
+            <select id="fertilizer" name="fertilizer">
+                <option value="organic">Organic</option>
+                <option value="chemical">Chemical</option>
+                <!-- Add more fertilizer options as needed -->
+            </select>
+            <br>
+
+            <button type="button" onclick="predictYield()">Predict Yield</button>
+        </form>
+    </div>
+
+    <script>
+        function predictYield() {
+            // Retrieve the selected option values
+            const crop = document.getElementById("crop").value;
+            const location = document.getElementById("location").value;
+            const fertilizer = document.getElementById("fertilizer").value;
+
+            // Perform any additional validation or processing as needed
+
+            // Make an API call to the Flask app to get the predicted yield
+            // Replace "YOUR_FLASK_APP_URL" with the actual URL of your Flask app endpoint
+            fetch("YOUR_FLASK_APP_URL", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    crop: crop,
+                    location: location,
+                    fertilizer: fertilizer,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // Process the predicted yield returned by the Flask app
+                const predictedYield = data.predicted_yield;
+                alert("Predicted Yield: " + predictedYield);
+            })
+            .catch((error) => {
+                alert("Error occurred while predicting yield.");
+                console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>
